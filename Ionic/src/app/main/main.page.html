@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Listado Sensores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- cargo con un *ngFor el listado de sensores   -->
+<ion-list>
+  <ion-item *ngFor="let sensor of listadoSensores" routerLink="/dispositivo/{{sensor.dispositivoId}}/{{sensor.electrovalvulaId}}" routerDirection="root" >
+    <ion-label>
+      <h2>{{sensor.nombre}} </h2>
+      
+      <h3>
+          <ion-icon name="thermometer"></ion-icon>
+          {{sensor.ubicacion}}</h3>
+  </ion-label>
+  </ion-item>
+</ion-list>
+</ion-content>

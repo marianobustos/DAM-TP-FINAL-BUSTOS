@@ -1,0 +1,7 @@
+{
+  "name": "DAM-Bustos-Mariano",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

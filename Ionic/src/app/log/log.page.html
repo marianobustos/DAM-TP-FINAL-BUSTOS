@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-buttons routerLink="/main" routerDirection="root" slot="start">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-buttons>
+      <ion-title >Tabla de Logs</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid >
+      <ion-row class="header-row">
+          <ion-col>
+              Id
+          </ion-col>
+          <ion-col>
+              Fecha
+          </ion-col>
+          <ion-col>
+              Apertura
+          </ion-col>
+          <ion-col>
+              Electrovalvula Id
+          </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let log of logs">
+          <ion-col>
+              {{ log.LogRiegoId }}
+          </ion-col>
+          <ion-col>
+              {{ log.fecha |date:'short' }}
+          </ion-col>
+          <ion-col>
+              {{ log.apertura }}
+          </ion-col>
+          <ion-col>
+              {{ log.electrovalvulaId }}
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
