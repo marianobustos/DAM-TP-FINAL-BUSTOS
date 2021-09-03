@@ -33,6 +33,12 @@
     </ion-button>
   </ng-template>
     <!-- <ion-button expand="block" (click)="accionarElectrovalvula()">{{btnOnOff}} ELECTROVÁLVULA</ion-button> -->
-    <ion-button expand="block" routerLink="/mediciones/{{sensorId}}" routerDirection="root" >VER TODAS LAS MEDICIONES</ion-button>
-    <ion-button expand="block" routerLink="/log/{{sensorId}}" routerDirection="root" >VER LOG DE RIEGOS</ion-button>
+    <ion-button expand="block" routerLink="/mediciones/{{sensorId}}" routerDirection="root" >VER TODAS LAS MEDICIONES</ion-button> 
+    <!-- directiva *nfif para mostrar habilitar el boton de log según logVacio -->
+    <div *ngIf="logVacio == true; else log">
+      <ion-button expand="block" fill ="outline" >LOG VACIO</ion-button>
+    </div>
+    <ng-template #log>
+      <ion-button expand="block" routerLink="/log/{{sensorId}}" routerDirection="root" >VER LOG DE RIEGOS</ion-button>
+    </ng-template>
 </ion-content>

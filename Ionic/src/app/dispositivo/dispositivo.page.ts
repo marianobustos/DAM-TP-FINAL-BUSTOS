@@ -28,6 +28,7 @@ export class DispositivoPage implements OnInit {
   public ultimaMedicion: number;  /* medición más reciente para utilizar en el indicador */
   public mediciones : Medicion[]; /* listado de mediciones para utilizar en la pagina con la tabla de mediciones */
   public logs: Logs[];            /* listado de logs para utilizar en la pagina con la tabla de logs */
+  public logVacio = true;
   public electrovalvulaAbierta: number = 0;
 
   constructor(
@@ -64,8 +65,9 @@ export class DispositivoPage implements OnInit {
         this.electrovalvulaAbierta=this.logs[0].Apertura;  /* Actualizo la variable para mostrar el texto del boton */
         console.log("ElectrovalvulaAbierta: "+this.electrovalvulaAbierta);
         /* No se porque no me toma bien el valor de la key Apertura */
-        this.electrovalvulaAbierta=1;
+        //this.electrovalvulaAbierta=1;
       } );
+    this.logVacio=false;
   }
 
   cerrarElectroValvula(){
@@ -85,6 +87,7 @@ export class DispositivoPage implements OnInit {
         /* No se porque no me toma bien el valor de la key Apertura */
         this.electrovalvulaAbierta=0;
       } );
+    this.logVacio=false;
   }
 
 
@@ -107,10 +110,15 @@ export class DispositivoPage implements OnInit {
     /* Traigo los logs del sensor desde la db */
     this.LogsServ.getLogsByElectrovalvulaId(this.electrovalvulaId).then(res => {
       this.logs = res;
-      console.log("Logs.Apertura:" +this.logs[0].Apertura);
-      this.electrovalvulaAbierta=this.logs[0].Apertura;  /* Actualizo la variable para mostrar el texto del boton */
-      console.log("ElectrovalvulaAbierta: "+this.electrovalvulaAbierta);
-      /* No se porque no me toma bien el valor de la key Apertura */
+      console.log("Logs recibido:" +this.logs);
+      if(this.logs.length>0){
+        this.logVacio=false;
+        console.log("LogVacio: "+this.logVacio);
+      }
+      else {
+        this.logVacio=true;
+        console.log("LogVacio: "+this.logVacio);
+      }
     } );
   }
 
