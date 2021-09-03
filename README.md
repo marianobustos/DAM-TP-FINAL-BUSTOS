@@ -30,8 +30,9 @@ git clone https://github.com/USER/DAM-TP-FINAL-BUSTOS.git
 
 > En caso que no tengas una cuenta en Github podes clonar directamente este repo.
 
+```
 git clone https://github.com/marianobustos/DAM-TP-FINAL-BUSTOS.git
-
+```
 ### Instalar las dependencias
 
 Para correr este proyecto es necesario que instales `Docker` y `Docker Compose`. 
@@ -65,3 +66,46 @@ Lab: http://localhost:8200
 
 Local: http://localhost:8100
 
+Continuá explorando el proyecto una vez que lo tengas funcionando.
+
+## Configuraciones de funcionamiento 🔩
+
+Al crearse la aplicación se ejecutan los contenedores de Docker de cada servicio, se crea la base de datos y sus tablas. A continuación podés encontrar info si querés cambiar la estructura de la DB o bien sus configuraciones de acceso.
+
+<details><summary><b>Lee cómo configurar la aplicación</b></summary><br>
+
+### Configuración de la DB
+
+Como ya comprobaste, para acceder PHPMyAdmin tenés que ingresar en la URL [localhost:8001/](http://localhost:8001/). En el login del administrador, el usuario para acceder a la db es `root` y contraseña es la variable `MYSQL_ROOT_PASSWORD` del archivo `docker-compose.yml`.
+
+Si quisieras cambiar la contraseña, puertos, hostname u otras configuraciones de la DB deberías primero modificar el servicio de la DB en el archivo `docker-compose.yml` y luego actualizar las configuraciones para acceder desde PHPMyAdmin y el servicio de NodeJS.
+
+### Estructura de la DB
+
+Al iniciar el servicio de la base de datos, si esta no está creada toma el archivo que se encuentra en `db/dumps/estructuraTPDAM-phpmyadmin.sql` para crear la base de datos automáticamente.
+
+En ese archivo está la configuración de la base de datos `DAM` y otras configuraciones más. Si quisieras cambiar algunas configuraciones deberías modificar este archivo y crear nuevamente la base de datos para que se tomen en cuenta los cambios.
+
+Tené en cuenta que la base de datos se crea con permisos de superusuario por lo que no podrías borrar el directorio con tu usuario de sistema, para eso debés hacerlo con permisos de administrador. En ese caso podés ejecutar el comando `sudo rm -r db/data` para borrar el directorio completo.
+
+</details>
+
+...
+...
+
+## Tecnologías utilizadas 🛠️
+
+En esta sección podés ver las tecnologías más importantes utilizadas.
+
+<details><summary><b>Mira la lista completa de tecnologías</b></summary><br>
+
+* [Docker](https://www.docker.com/) - Ecosistema que permite la ejecución de contenedores de software.
+* [Docker Compose](https://docs.docker.com/compose/) - Herramienta que permite administrar múltiples contenedores de Docker.
+* [MySQL](https://www.mysql.com/) - Base de datos para consultar y almacenar datos.
+* [PHPMyAdmin](https://www.phpmyadmin.net/) - Administrador web de base de datos.
+* [Node JS](https://nodejs.org/es/) - Motor de ejecución de código JavaScript en backend.
+* [Express](https://expressjs.com/es/) - Framework web utilizado para crear la API del proyecto.
+* [Angular](https://angular.io/) - Framework utilizado para desarrollar el frontend.
+* [Ionic](https://ionicframework.com/) - Framework utilizado para crear aplicaciones híbridas (web/mobile).
+
+</details>
