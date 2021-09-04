@@ -88,6 +88,214 @@ En ese archivo está la configuración de la base de datos `DAM` y otras configu
 
 Tené en cuenta que la base de datos se crea con permisos de superusuario por lo que no podrías borrar el directorio con tu usuario de sistema, para eso debés hacerlo con permisos de administrador. En ese caso podés ejecutar el comando `sudo rm -r db/data` para borrar el directorio completo.
 
+
+
+</details>
+
+## Detalles principales 🔍
+
+En esta sección vas a encontrar las características más relevantes del proyecto.
+
+<details><summary><b>Mira los detalles más importantes de la aplicación</b></summary><br>
+<br>
+
+
+### Organización del proyecto
+
+En la siguiente ilustración podés ver cómo está organizado el proyecto para que tengas en claro qué cosas hay en cada lugar.
+
+```sh
+├── db                                          # directorio de la DB
+│   ├── data                                    # estructura y datos de la DB
+│   └── dumps                                   # directorio de estructuras de la DB
+│       └── estructuraTPDAM-phpmyadmin.sql      # estructura con la base de datos "estructuraTPDAM-phpmyadmin"
+├── doc                                         # documentacion general del proyecto
+└── Ionic                                       # directorio raiz del frontend
+│   ├── src                                     # directorio del código principal de Ionic
+│   │   └── app                                 # directorio de paginas de la aplicación
+│   │       ├── dispositivo                     # página de dispositivo
+│   │       ├── log                             # página de log
+│   │       ├── main                            # página principal
+│   │       ├── mediciones                      # página de mediciones
+│   │       ├── model                           # módulo con modelos de datos para mediciones-dispositivos-log
+│   │       ├── pipe                            # componente para el custom pipe
+│   │       └── services                        # módulo con servicios de la aplicación
+│   └── package.json                            # configuración de dependencias de Ionic
+└── node                                        # directorio raiz del backend
+│   ├── mysql                                   # directorio del pool de conexiones de MySQL
+│   ├── routes                                  # directorio raiz de las rutas hacia APIs de los servicios
+│   │   ├── dispositivo                         # directorio de los endpoints de dispositivos
+│   │   ├── logs                                # directorio de los endpoints de logs
+│   │   └── medicion                            # directorio de los endpoints de mediciones
+│   └── index.js                                # archivo principal de la API de NodeJS
+├── docker-compose.yml          # archivo de configuración de servicios de Docker
+├── README.md                   # descripción de la documentación del proyecto
+└── .git                        # directorio de control de versiones
+```
+
+### La base de datos
+
+La base de datos se comunica con el servicio de NodeJS y permite almacenar el estado de los dispositivos en la tabla **Devices**. Ejecuta un motor **MySQL versión 5.7** y permite que la comunicación con sus clientes pueda realizarse usando usuario y contraseña en texto plano. En versiones posteriores es necesario brindar claves de acceso, por este motivo la versión 5.7 es bastante utilizada para fases de desarrollo.
+
+En la siguiente imagen se pueder ver el DER de la base de datos:
+![DER](doc/DER.png)
+
+### El administrador de la DB
+
+Para esta aplicación se usa **PHPMyAdmin**, que es un administrador de base de datos web muy utilizado y que podés utilizar en caso que quieras realizar operaciones con la base, como crear tablas, modificar columnas, hacer consultas y otras cosas más.
+
+### Frontend
+
+A continuación se muestran las diferentes vistas de la aplicación:
+
+![Pagina principal](doc/main.png)
+
+![Vista de dispositivo](doc/dispositivo.png)
+
+![Vista de mediciones](doc/mediciones.png)
+
+![Vista de logs](doc/logs.png)
+
+### Backend
+
+El backend se implemento con NodeJS y Express.js, creando una API REST para la comunicación entre el frontend y los servicios CRUD hacia la base de datos. 
+
+<details><summary><b>Ver los endpoints disponibles</b></summary><br>
+
+1) Devolver el estado de los dispositivos.
+
+```json
+{
+    "method": "get",
+    "request_headers": "/main/api/dispositivo",
+    "request_body": "",
+    "response_code": 200,
+    "request_body": {
+        "dispositivo": [
+            {
+                "dispositivoId": Number,
+                "Nombre": String,
+                "ubicacion": String,
+                "electrovalvulaId": Number
+            }
+        ]
+    },
+}
+``` 
+2) Devolver lista de mediciones de un dispositivo.
+
+```json
+{
+    "method": "get",
+    "request_headers": "/main/api/medicion/:idDispositivo/todas",
+    "request_body": "",
+    "response_code": 200,
+    "request_body": {
+        "dispositivo": [
+            {
+                "dispositivoId": Number,
+                "medicionId": number,
+                "valor": String,
+                "fecha": Datetime
+            }
+            ...
+            {
+                "dispositivoId": Number,
+                "medicionId": number,
+                "valor": String,
+                "fecha": Datetime
+            }
+        ]
+    },
+}
+``` 
+3) Devolver la medición más reciente de un dispositivo.
+
+```json
+{
+    "method": "get",
+    "request_headers": "/main/api/medicion/:idDispositivo",
+    "request_body": "",
+    "response_code": 200,
+    "request_body": {
+        "dispositivo": [
+            {
+                "dispositivoId": Number,
+                "medicionId": number,
+                "valor": String,
+                "fecha": Datetime
+            }
+        ]
+    },
+}
+``` 
+
+4) Agregar una nueva medición de un dispositivo.
+
+```json
+{
+    "method": "post",
+    "request_headers": "/main/api/medicion/agregar",
+    "request_body": "fecha:medicion.fecha,valor:medicion.valor,dispositivoId:medicion.dispositivoId",
+    "response_code": 200,
+    "request_body": {
+        "dispositivo": [
+            {
+                "dispositivoId": Number,
+                "medicionId": number,
+                "valor": String,
+                "fecha": Datetime
+            }            
+        ]
+    },
+}
+``` 
+
+5) Devolver lista de logs de un dispositivo.
+
+```json
+{
+    "method": "get",
+    "request_headers": "/main/api/logs/:idElectrovalvula/todas",
+    "request_body": "",
+    "response_code": 200,
+    "request_body": {
+        "dispositivo": [
+            {
+                "logRiegoId": Number,
+                "fecha": Datetime,
+                "apertura": Number,
+                "electrovalvulaId": Number
+            }
+        ]
+    },
+}
+``` 
+
+6) Agregar un nuevo log de un dispositivo.
+
+```json
+{
+    "method": "post",
+    "request_headers": "/main/api/logs/agregar",
+    "request_body": "logRiegoId:log.LogRiegoId, electrovalvulaId:log.ElectrovalvulaId, apertura:log.Apertura, fecha:log.Fecha",
+    "response_code": 200,
+    "request_body": {
+        "dispositivo": [
+            {
+                "logRiegoId": Number,
+                "fecha": Datetime,
+                "apertura": Number,
+                "electrovalvulaId": Number
+            }
+        ]
+    },
+}
+``` 
+
+</details>
+
+
 </details>
 
 ...
@@ -109,3 +317,13 @@ En esta sección podés ver las tecnologías más importantes utilizadas.
 * [Ionic](https://ionicframework.com/) - Framework utilizado para crear aplicaciones híbridas (web/mobile).
 
 </details>
+
+Las colaboraciones principales fueron realizadas por:
+
+* **[Agustin Bassi](https://github.com/agustinBassi)**: Aporte de imagenes de microservicios para el backend.
+* **[Brian Ducca](https://github.com/brianducca)**: Ayuda para conectar el backend a la base de datos, puesta a punto de imagen de Docker. Docente a cargo del curso y tutor del proyecto.
+* **[Mariano Matias Bustos](https://github.com/marianobustos)**: Desarrollo de APIs en Nodejs, Diseño e implementación de app híbrida con Ionic+Angular, integración y documentación del proyecto.
+
+## Licencia 📄
+
+Este proyecto está bajo Licencia ([MIT](https://choosealicense.com/licenses/mit/)). Podés ver el archivo [LICENSE.md](LICENSE.md) para más detalles sobre el uso de este material.
