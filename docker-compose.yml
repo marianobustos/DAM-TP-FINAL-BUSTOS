@@ -38,6 +38,21 @@ services:
         ports: 
             -                    "8000:3000"    # Backend en el puerto 3000 del host
         command:                 nodemon /home/node/app/src/index.js
+    
+    ionic-frontend:         # Frontend de Ionic
+        image:                   ionic-client:latest
+        build:
+            context:              ./Ionic
+            dockerfile:           ./Dockerfile
+        volumes:
+            -                    ./Ionic:/usr/src/services
+        networks:
+            -                    app-fullstack-net
+        ports:
+            -                    "8100:8100"    # Puerto para acceder a la vista en navegador
+            -                    "8200:8200"    # Puerto para acceder a la vista mobile
+        working_dir:            /usr/src/services
+        command:                npm run serve
 
 networks:
     app-fullstack-net:

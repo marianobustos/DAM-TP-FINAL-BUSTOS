@@ -4,46 +4,46 @@
 ### Angular ###
 ## Angular ##
 # compiled output
-dist/
-tmp/
-app/**/*.js
-app/**/*.js.map
+/Ionic/dist/
+/Ionic/tmp/
+/Ionic/app/**/*.js
+/Ionic/app/**/*.js.map
 
 # dependencies
-node_modules/
-bower_components/
+/Ionic/node_modules/
+/Ionic/bower_components/
 
 # IDEs and editors
-.idea/
+/Ionic/.idea/
 
 # misc
-.sass-cache/
-connect.lock/
-coverage/
-libpeerconnection.log/
-npm-debug.log
-testem.log
-typings/
+/Ionic/.sass-cache/
+/Ionic/connect.lock/
+/Ionic/coverage/
+/Ionic/libpeerconnection.log/
+/Ionic/npm-debug.log
+/Ionic/testem.log
+/Ionic/typings/
 
 # e2e
-e2e/*.js
-e2e/*.map
+/Ionic/e2e/*.js
+/Ionic/e2e/*.map
 
 # System Files
-.DS_Store/
+/Ionic/.DS_Store/
 
 ### Ionic3 ###
 # Log an tmp data
-*~
-*.sw[mnpcod]
-*.log
-*.tmp
-*.tmp.*
-log.txt
+/Ionic/*~
+/Ionic/*.sw[mnpcod]
+/Ionic/*.log
+/Ionic/*.tmp
+/Ionic/*.tmp.*
+/Ionic/log.txt
 
 # NPM (Node Package Manager) files
-npm-debug.log*
-temp/
+/Ionic/npm-debug.log*
+/Ionic/temp/
 
 # Preprocessors cache files
 .sourcemaps/
