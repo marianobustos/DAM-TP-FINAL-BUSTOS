@@ -41,32 +41,18 @@ En [este artículo](https://www.gotoiot.com/pages/articles/docker_installation_l
 
 En caso que quieras instalar las herramientas en otra plataforma o tengas algún incoveniente, podes leer la documentación oficial de [Docker](https://docs.docker.com/get-docker/) y también la de [Docker Compose](https://docs.docker.com/compose/install/).
 
-Para el correcto funcionamiento del frontend se requiere tener instalado el framework Ionic. Para la instalación de Ionic se utiliza el comando :
-
-npm install -g @ionic/cli
-
-Para poder visualizar la vista Lab pudiendo testear la compatibilidad visual con dispositivos Android y IOS simultaneamente se requiere instalar:
-
-npm i @ionic/lab
-
-Luego debemos movernos a la carpeta Ionic y ejecutar:
-npm install 
+El resto de las dependencias se instalarán automaticamente con Docker.
 
 ### Ejecutar la aplicación
 
-Para ejecutar la aplicación tenes que correr dos comandos:
-1) El comando `docker-compose up` desde la raíz del proyecto. Este comando va a descargar las imágenes de Docker de node, de la base datos y del admin de la DB, y luego ponerlas en funcionamiento.
+Para ejecutar la aplicación solo tenés que correr el comando:
+`docker-compose up` desde la raíz del proyecto. Este comando va a descargar las imágenes de Docker de node, de la base datos y generará una imagen del Ionic-client a partir del docker file incluido en el repositorio. Una vez que esto se haya completado (puede tardar según la conexión a internet), la aplicación se ejecutará los servicios mencionados.
 
-2) Luego desde la carpeta Ionic tendrás que ejecutar el siguiente comando para poder ejecutar el frontend:
-ionic serve --lab
-
-Luego se podrá acceder con un browser a dos url segun la vista que deseemos ver:
-
-Lab: http://localhost:8200
-
-Local: http://localhost:8100
+Luego se podrá acceder con un browser a la vista de la aplicación desde la URL: `http://localhost:8100/`.
 
 Continuá explorando el proyecto una vez que lo tengas funcionando.
+
+</details>
 
 ## Configuraciones de funcionamiento 🔩
 
@@ -135,6 +121,8 @@ En la siguiente ilustración podés ver cómo está organizado el proyecto para 
 
 ### La base de datos
 
+<details><summary><b>Ver detalle de la base de datos</b></summary><br>
+
 La base de datos se comunica con el servicio de NodeJS y permite almacenar el estado de los dispositivos en la tabla **Devices**. Ejecuta un motor **MySQL versión 5.7** y permite que la comunicación con sus clientes pueda realizarse usando usuario y contraseña en texto plano. En versiones posteriores es necesario brindar claves de acceso, por este motivo la versión 5.7 es bastante utilizada para fases de desarrollo.
 
 En la siguiente imagen se pueder ver el DER de la base de datos:
@@ -144,9 +132,14 @@ En la siguiente imagen se pueder ver el DER de la base de datos:
 
 Para esta aplicación se usa **PHPMyAdmin**, que es un administrador de base de datos web muy utilizado y que podés utilizar en caso que quieras realizar operaciones con la base, como crear tablas, modificar columnas, hacer consultas y otras cosas más.
 
+</details>
+
 ### Frontend
 
+<details><summary><b>Ver detalle del frontend</b></summary><br>
+
 A continuación se muestran las diferentes vistas de la aplicación:
+
 
 ![Pagina principal](doc/main.png)
 
@@ -155,6 +148,8 @@ A continuación se muestran las diferentes vistas de la aplicación:
 ![Vista de mediciones](doc/mediciones.png)
 
 ![Vista de logs](doc/logs.png)
+
+</details>
 
 ### Backend
 
@@ -295,11 +290,7 @@ El backend se implemento con NodeJS y Express.js, creando una API REST para la c
 
 </details>
 
-
 </details>
-
-...
-...
 
 ## Tecnologías utilizadas 🛠️
 
